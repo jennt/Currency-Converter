@@ -1,6 +1,7 @@
 require 'currency'
 
 describe Currency do
+  
   describe '#new' do
     it 'returns currency with amount and code' do
       curr1 = Currency.new(10, 'USD')
