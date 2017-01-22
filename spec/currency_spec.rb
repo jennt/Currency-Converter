@@ -1,38 +1,50 @@
 require 'currency'
 
 describe Currency do
-  
+
   describe '#new' do
-    it 'returns currency with amount and code' do
-      curr1 = Currency.new(10, 'USD')
+    context 'when amount and code are separate' do
+      it 'returns currency with amount and code' do
+        curr1 = Currency.new('USD', 10)
 
-      expect(curr1.amount).to eq 10
-      expect(curr1.code).to eq 'USD'
+        expect(curr1.amount).to eq 10
+        expect(curr1.code).to eq 'USD'
 
+      end
+    end
+
+    context 'when symbol is embedded in the amount' do
+      it 'returns currency with amount and code' do
+        curr1 = Currency.new('$20.00')
+
+        expect(curr1.amount).to eq 20.00
+        expect(curr1.code).to eq 'USD'
+
+      end
     end
   end
 
-  describe '#equal?' do
+  describe '#equal_to?' do
     it 'returns true when amounts and codes match' do
-      curr1 = Currency.new(10, 'USD')
-      curr2 = Currency.new(10, 'USD')
+      curr1 = Currency.new('USD', 10)
+      curr2 = Currency.new('USD', 10)
 
-      expect(curr1.equals?(curr2)).to eq true
+      expect(curr1.equal_to?(curr2)).to eq true
 
     end
 
     it 'returns false when amount does not match' do
-      curr1 = Currency.new(10, 'USD')
-      curr2 = Currency.new(20, 'USD')
+      curr1 = Currency.new('USD', 10)
+      curr2 = Currency.new('USD', 20)
 
-      expect(curr1.equals?(curr2)).to eq false
+      expect(curr1.equal_to?(curr2)).to eq false
     end
 
     it 'returns false when code does not match' do
-      curr1 = Currency.new(10, 'USD')
-      curr2 = Currency.new(10, 'EUR')
+      curr1 = Currency.new('USD', 10)
+      curr2 = Currency.new('EUR', 10)
 
-      expect(curr1.equals?(curr2)).to eq false
+      expect(curr1.equal_to?(curr2)).to eq false
     end
   end
 
@@ -40,8 +52,8 @@ describe Currency do
     context 'when currency codes are the same' do
       it 'returns a new currency object with combined amounts' do
         # Arrange
-        curr1 = Currency.new(10, 'USD')
-        curr2 = Currency.new(11, 'USD')
+        curr1 = Currency.new('USD', 10)
+        curr2 = Currency.new('USD', 11)
         # Act
         curr3 = curr1 + curr2
         # Assert
@@ -52,8 +64,8 @@ describe Currency do
 
     context 'when currency codes are different' do
       it 'raises +Error when codes are not the same' do
-        curr1 = Currency.new(10, 'EUR')
-        curr2 = Currency.new(10, 'USD')
+        curr1 = Currency.new('EUR', 10)
+        curr2 = Currency.new('USD', 10)
 
         expect { curr1 + curr2 }.to raise_error DifferentCurrencyCodeError
       end
@@ -64,8 +76,8 @@ describe Currency do
     context 'when currency codes are the same' do
       it 'returns a new currency object with combined amounts' do
         # Arrange
-        curr1 = Currency.new(15, 'USD')
-        curr2 = Currency.new(5, 'USD')
+        curr1 = Currency.new('USD', 15)
+        curr2 = Currency.new('USD', 5)
         # Act
         curr3 = curr1 - curr2
         # Assert
@@ -76,8 +88,8 @@ describe Currency do
 
     context 'when currency codes are different' do
       it 'raises -Error when codes are not the same' do
-        curr1 = Currency.new(10, 'EUR')
-        curr2 = Currency.new(10, 'USD')
+        curr1 = Currency.new('EUR', 10)
+        curr2 = Currency.new('USD', 10)
 
         expect { curr1 - curr2 }.to raise_error DifferentCurrencyCodeError
       end
@@ -86,14 +98,14 @@ describe Currency do
 
   describe '#*' do
     it 'returns a new currency object when multiplied by a float' do
-      curr = Currency.new(10, 'EUR')
+      curr = Currency.new('EUR', 10)
       curr.amount = curr * 2.0
 
       expect(curr.amount).to eq 20.0
     end
 
     it 'returns a new currency object when multiplied by an integer' do
-      curr = Currency.new(10, 'EUR')
+      curr = Currency.new('EUR', 10)
       curr.amount = curr * 2
 
       expect(curr.amount).to eq 20
@@ -103,7 +115,7 @@ describe Currency do
   # describe '#currency' do
   #   context 'when given one argument containing symbol and amount' do
   #     it 'returns correct currency code' do
-  #       input = "$1.20"
+  #       curr = "$1.20"
   #
   #       expect(currency(input)).to eq 'USD'
   #     end
@@ -114,5 +126,5 @@ describe Currency do
     #
     #   end
     # end
-  # end
+  #  end
 end

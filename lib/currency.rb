@@ -4,12 +4,20 @@ end
 class Currency
   attr_accessor :amount, :code
 
-  def initialize(amount, code)
-    @amount = amount
-    @code = code
+  def initialize(code, amount= nil)
+    codes = {"$"=> 'USD', "€"=> 'EUR', "¥"=> 'JPN'}
+
+    if amount != nil
+      @amount = amount
+      @code = code
+    else
+      symbol = code[0]
+      @code = codes[symbol]
+      @amount = code[1..-1].to_f
+    end
   end
 
-  def equals?(curr)
+  def equal_to?(curr)
     if self.amount == curr.amount && self.code == curr.code
       true
     else
@@ -21,7 +29,7 @@ class Currency
     if curr.code != @code
       raise DifferentCurrencyCodeError
     else
-      Currency.new(@amount + curr.amount, code)
+      Currency.new(code, @amount + curr.amount)
     end
   end
 
@@ -29,27 +37,18 @@ class Currency
     if curr.code != @code
       raise DifferentCurrencyCodeError
     else
-      Currency.new(@amount - curr.amount, code)
+      Currency.new(code, @amount - curr.amount)
     end
   end
 
-  def * (int_or_float)
-    @amount * int_or_float
+  def *(factor)
+    if factor.is_a? Float or factor.is_a? Integer
+      @amount *= factor
+    #else
+      #factor = Currency.new()
+      #need to deal with curr object given with symbol and amount
+    end
   end
-
-  # def currency(input) #code w/ symbol OR code then symbol
-  #   'USD'
-  # end
-  #return correct code
-
-  # def symbol?
-  #   if  amount.chars.first == "$" then @code = USD
-  #     if  amount.chars.first == "€" then @code = EUR
-  #       if  amount.chars.first == "¥" then @code = JPN
-  #       end
-  #     end
-  #   end
-  # end
 
 end
 
