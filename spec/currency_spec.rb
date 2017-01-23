@@ -29,7 +29,7 @@ describe Currency do
       curr1 = Currency.new('USD', 10)
       curr2 = Currency.new('USD', 10)
 
-      expect(curr1.equal_to?(curr2)).to eq true
+      expect(curr1 == curr2).to eq true
 
     end
 
@@ -37,14 +37,14 @@ describe Currency do
       curr1 = Currency.new('USD', 10)
       curr2 = Currency.new('USD', 20)
 
-      expect(curr1.equal_to?(curr2)).to eq false
+      expect(curr1 == curr2).to eq false
     end
 
     it 'returns false when code does not match' do
       curr1 = Currency.new('USD', 10)
       curr2 = Currency.new('EUR', 10)
 
-      expect(curr1.equal_to?(curr2)).to eq false
+      expect(curr1 == curr2).to eq false
     end
   end
 
@@ -99,16 +99,16 @@ describe Currency do
   describe '#*' do
     it 'returns a new currency object when multiplied by a float' do
       curr = Currency.new('EUR', 10)
-      curr.amount = curr * 2.0
+      result = curr * 2.0
 
-      expect(curr.amount).to eq 20.0
+      expect(result.amount).to eq 20.0
     end
 
     it 'returns a new currency object when multiplied by an integer' do
       curr = Currency.new('EUR', 10)
-      curr.amount = curr * 2
+      result = curr * 2
 
-      expect(curr.amount).to eq 20
+      expect(result.amount).to eq 20
     end
   end
 

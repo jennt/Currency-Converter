@@ -22,7 +22,7 @@ describe CurrencyConverter do
     }
   })
 
-    expect(curr.conv_rates).to eq 'USD' => {
+    expect(curr.conversion_rates).to eq 'USD' => {
       'EUR' => 0.894726,
       'JPN' => 101.818,
       'USD' => 1
