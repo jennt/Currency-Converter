@@ -26,7 +26,7 @@ class CurrencyConverter
   end
 
   def convert
-    converted = @currency.amount.to_f * @currency_data[@currency.code][@code]
+    new_curr = @currency.amount.to_f * @conv_rates[@currency.code][@code]
     Currency.new(@code, converted)
   end
 
