@@ -24,7 +24,7 @@ describe Currency do
     end
   end
 
-  describe '#equal_to?' do
+  describe '#==?' do
     it 'returns true when amounts and codes match' do
       curr1 = Currency.new('USD', 10)
       curr2 = Currency.new('USD', 10)

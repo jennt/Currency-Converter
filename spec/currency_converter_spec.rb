@@ -40,9 +40,17 @@ describe CurrencyConverter do
     end
   end
 
-# describe '#convert' do
-#   context ''
-# end
+  describe '#convert(currency, to_code)' do
+    test_currency = Currency.new('USD', 10)
+    test_converter = CurrencyConverter.new
+    test_to_code = 'EUR'
+
+    context 'when given a currency and code to convert to' do
+      it 'returns a new currency object' do
+        expect(test_converter.convert(test_currency, test_to_code)).to eq Currency.new('EUR', 8.94726)
+      end
+    end
+  end
 
 
 end
