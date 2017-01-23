@@ -9,7 +9,7 @@ def main
   puts "Your currency is #{currency}"
 
   puts "What would you like to convert it to: "
-  to_code = gets.chomp
+  to_code = gets.chomp.upcase
 
   converter = CurrencyConverter.new
   puts "Lets convert #{currency} to #{to_code}"
